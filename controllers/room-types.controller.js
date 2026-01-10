@@ -21,12 +21,12 @@ export const createRoomType = async (req, res) => {
         // Returning the created room
         res.status(201).json({
             success: true,
-            messaage: "Room type created",
+            messaage: `Room type ${name} created.`,
             data: roomType
         });
 
     } catch (error) {
-        return new Error("Failed to create room type");
+        return new Error("Failed to create room type.");
     }
 }
 
@@ -36,7 +36,7 @@ export const getRoomTypes = async (req, res) => {
     const result = await Database.select().from(RoomTypes);
     res.json(result);
   } catch (err) {
-        return new Error("Failed to list room types");
+        return new Error("Failed to list room types.");
   }
 };
 
@@ -55,10 +55,10 @@ export const updateRoomType = async (req, res) => {
     // Returning updated room type
     res.json({
         success: true,
-        messaage: "Room type updated",
+        messaage: `Room type updated.`,
         data: roomType
     });
   } catch (err) {
-        return new Error("Failed to update room type");
+        return new Error("Failed to update room type.");
   }
 };

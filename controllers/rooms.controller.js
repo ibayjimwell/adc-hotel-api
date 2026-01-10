@@ -11,9 +11,25 @@ export const createRoom = async (req, res) => {
     if (!roomNumber || !roomTypeId) {
         return res.status(400).json({
             success: false,
-            type: "W-MissingRequired",
-            message: "Missing required fields"
+            type: "W-Missing Required",
+            message: "Missing required fields, room number and room type is required."
         });
+    }
+
+    // Room number exist handler
+    const existingRoom = await Database
+      .select({ id: Rooms.id })
+      .from(Rooms)
+      .where(eq(Rooms.roomNumber, roomNumber))
+      .limit(1);
+
+    
+    if (existingRoom.length > 0) {
+      return res.status(409).json({
+        success: false,
+        type: "W-Room Number Exist",
+        message: `Room number ${roomNumber} is already exists.`,
+      });
     }
 
     // Creating record for room
@@ -28,11 +44,11 @@ export const createRoom = async (req, res) => {
     // Returning the created room
     res.status(201).json({
         success: true,
-        message: "Room created",
+        message: `Room ${roomNumber} created.`,
         data: room
     });
   } catch (err) {
-      return new Error("Failed to create room");
+      return new Error("Failed to create room.");
   }
 };
 
@@ -55,7 +71,7 @@ export const getRooms = async (req, res) => {
         // Returning the rooms
         res.json(result);
   } catch (err) {
-        return new Error("Failed to list rooms");
+        return new Error("Failed to list rooms.");
     }
 };
 
@@ -75,10 +91,10 @@ export const updateRoomStatus = async (req, res) => {
     // Returning updated room
     res.json({
         success: true,
-        message: "Room status updated",
+        message: `Room status updated to ${status}.`,
         data: room
     });
   } catch (err) {
-      return new Error("Failed to update room status");
+      return new Error("Failed to update room status.");
   }
 };

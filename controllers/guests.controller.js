@@ -42,17 +42,17 @@ export const createGuest = async (req, res) => {
 
             return res.json({
               success: true,
-              message: "Existing guest reused",
+              message: `Existing guest ${firstName} ${lastName} reused.`,
               data: existingGuest,
             });
           }
 
           // Response existing guest
           if (existingGuest) {
-            return res.json({
+            return res.status(409).json({
               success: false,
-              type: "W-RecordAlreadyExist",
-              message: "Existing record found",
+              type: "W-Guest Already Exist",
+              message: `Existing record of ${email} and ${phone} found.`,
               data: existingGuest,
             });
           }
@@ -62,8 +62,8 @@ export const createGuest = async (req, res) => {
         if (!firstName || !lastName) {
             return res.status(400).json({
               success: false,
-              type: "W-NameRequired",
-              message: "Name are required"
+              type: "W-Name Required",
+              message: "Name are required to fill up."
             });
         }
 
@@ -83,7 +83,7 @@ export const createGuest = async (req, res) => {
         // Return the created guest
         res.status(201).json({
           success: true,
-          message: "Guest created",
+          message: `Guest ${firstName} ${lastName} created.`,
           data: guest
         });
 
@@ -118,7 +118,7 @@ export const getGuests = async (req, res) => {
     });
       
   } catch (err) {
-        return new Error("Failed to load guests");
+        return new Error("Failed to load guests.");
   }
 };
 
@@ -137,8 +137,8 @@ export const getGuestById = async (req, res) => {
     if (!guest) {
         return res.status(404).json({
           success: false,
-          type: "W-NoGuestFound",
-          message: "Guest not found"
+          type: "W-No Guest Found",
+          message: "Guest not found create guest."
         });
     }
 
@@ -149,7 +149,7 @@ export const getGuestById = async (req, res) => {
       });
       
   } catch (err) {
-        return new Error("Failed to load guest");
+        return new Error("Failed to load guest.");
   }
 };
 
@@ -169,10 +169,10 @@ export const updateGuest = async (req, res) => {
       res.json({
           success: true,
           data: guest,
-          message: "Guest updated"
+          message: `Guest ${req.firstName} ${req.lastName} updated.`
       });
       
   } catch (err) {
-        return new Error("Failed to update guest");
+        return new Error("Failed to update guest.");
   }
 };
