@@ -7,6 +7,7 @@ import { errorHandler } from "./middlewares/errorHandler.js";
 import { notFound } from "./middlewares/notFound.js";
 import { PORT, NODE_ENV } from "./config/env.js";
 
+import router from "./routes/index.js";
 import HealthRouter from "./routes/health.route.js";
 import { pool } from "./database/drizzle.js";
 
@@ -25,6 +26,7 @@ if (NODE_ENV === "development") {
 }
 
 // Routes
+app.use("/api/v1", router);
 app.use("/api/v1/health", HealthRouter);
 
 // Error Handling

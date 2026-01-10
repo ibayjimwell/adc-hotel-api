@@ -8,6 +8,13 @@
       "when": 1767927479626,
       "tag": "0000_regular_puff_adder",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1768008630530,
+      "tag": "0001_open_excalibur",
+      "breakpoints": true
     }
   ]
 }

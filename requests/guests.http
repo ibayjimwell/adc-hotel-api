@@ -1,0 +1,51 @@
+@baseUrl = http://localhost:4000/api/v1
+
+###
+# Create Guest
+POST {{baseUrl}}/guests
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@email.com",
+  "phone": "+639171234567",
+  "idType": "National ID",
+  "idNumber": "725519999247742"
+}
+
+###
+# Create Guest But Existing
+POST {{baseUrl}}/guests?updateExist=true
+Content-Type: application/json
+
+{
+  "firstName": "Johnny",
+  "lastName": "Sins",
+  "email": "john.doe@email.com",
+  "phone": "+639171234567",
+  "idType": "National ID",
+  "idNumber": "725519999247742"
+}
+
+###
+# Get All Guests
+GET {{baseUrl}}/guests
+
+###
+# Search Guests
+GET {{baseUrl}}/guests?search=johnny
+
+###
+# Get Guest By ID
+GET {{baseUrl}}/guests/87dea23a-0e78-42c0-8320-bca31c184d2d
+
+###
+# Update Guest
+PUT {{baseUrl}}/guests/87dea23a-0e78-42c0-8320-bca31c184d2d
+Content-Type: application/json
+
+{
+  "firstName": "Johnny",
+  "phone": "+639189876543"
+}
