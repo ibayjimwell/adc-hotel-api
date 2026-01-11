@@ -8,7 +8,7 @@ import {
 import { eq, and, lt, gt } from "drizzle-orm";
 
 // Create Reservations
-export const createReservation = async (req, res) => {
+export const createReservation = async (req, res, next) => {
   try {
     const { guestId, roomIds, checkinDate, checkoutDate } = req.body;
 
@@ -21,7 +21,19 @@ export const createReservation = async (req, res) => {
       });
     }
 
-    if (new Date(checkinDate) >= new Date(checkoutDate)) {
+    // ✅ Convert ONCE
+    const checkin = new Date(checkinDate);
+    const checkout = new Date(checkoutDate);
+
+    if (isNaN(checkin.getTime()) || isNaN(checkout.getTime())) {
+      return res.status(400).json({
+        success: false,
+        type: "W-Invalid Date",
+        message: "Invalid date format.",
+      });
+    }
+
+    if (checkin >= checkout) {
       return res.status(400).json({
         success: false,
         type: "W-Invalid Dates",
@@ -39,8 +51,8 @@ export const createReservation = async (req, res) => {
         .where(
           and(
             eq(Stays.roomId, roomId),
-            lt(Stays.checkinAt, checkoutDate),
-            gt(Stays.checkoutAt, checkinDate)
+            lt(Stays.checkinAt, checkin),
+            gt(Stays.checkoutAt, checkout)
           )
         )
         .limit(1);
@@ -64,8 +76,8 @@ export const createReservation = async (req, res) => {
         .where(
           and(
             eq(ReservationRoom.roomId, roomId),
-            lt(Reservation.checkinDate, checkoutDate),
-            gt(Reservation.checkoutDate, checkinDate)
+            lt(Reservation.checkinDate, checkin),
+            gt(Reservation.checkoutDate, checkout)
           )
         )
         .limit(1);
@@ -84,8 +96,8 @@ export const createReservation = async (req, res) => {
       .insert(Reservation)
       .values({
         guestId,
-        checkinDate,
-        checkoutDate,
+        checkinDate: checkin,
+        checkoutDate: checkout,
         status: "pending",
       })
       .returning();
@@ -106,7 +118,7 @@ export const createReservation = async (req, res) => {
     });
 
   } catch (error) {
-      return new Error("Failed to create reservation.");
+      return next(new Error(error.message));
   }
 };
 

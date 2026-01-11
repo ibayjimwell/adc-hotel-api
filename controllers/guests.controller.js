@@ -169,7 +169,7 @@ export const updateGuest = async (req, res) => {
       res.json({
           success: true,
           data: guest,
-          message: `Guest ${req.firstName} ${req.lastName} updated.`
+          message: `Guest ${req.body.firstName} ${req.body.lastName} updated.`
       });
       
   } catch (err) {

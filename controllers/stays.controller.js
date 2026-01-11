@@ -3,7 +3,7 @@ import { Stays, Rooms } from "../models/index.js";
 import { eq } from "drizzle-orm";
 
 // Check In
-export const checkIn = async (req, res) => {
+export const checkIn = async (req, res, next) => {
   try {
     const { guestId, roomId, checkinAt } = req.body;
 
@@ -13,6 +13,18 @@ export const checkIn = async (req, res) => {
         success: false,
         type: "W-Missing Required",
         message: "Guest ID, Room ID, and Checkin Date are required.",
+      });
+    }
+
+    // Convert string into Date
+    const checkinDate = new Date(checkinAt);
+
+    // Validate date
+    if (isNaN(checkinDate.getTime())) {
+      return res.status(400).json({
+        success: false,
+        type: "W-Invalid Date",
+        message: "Invalid checkin date format.",
       });
     }
 
@@ -34,7 +46,7 @@ export const checkIn = async (req, res) => {
     if (room.status !== "available") {
       return res.status(409).json({
         success: false,
-        type: "W-Room NotA vailable",
+        type: "W-Room Not Available",
         message: `Room ${room.roomNumber} is not available.`,
       });
     }
@@ -45,7 +57,7 @@ export const checkIn = async (req, res) => {
       .values({
         guestId,
         roomId,
-        checkinAt,
+        checkinAt: checkinDate,
         status: "active",
       })
       .returning();
@@ -64,12 +76,12 @@ export const checkIn = async (req, res) => {
     });
 
   } catch (error) {
-      return new Error("Failed to check in guest.");
+      return next(new Error(error.message));
   }
 };
 
 // Check Out
-export const checkOut = async (req, res) => {
+export const checkOut = async (req, res, next) => {
   try {
     const { stayId } = req.params;
     const { checkoutAt } = req.body;
@@ -80,6 +92,18 @@ export const checkOut = async (req, res) => {
         success: false,
         type: "W-Missing Required",
         message: "Checkout Date is required.",
+      });
+    }
+
+    // Convert string into Date
+    const checkoutDate = new Date(checkoutAt);
+
+    // Validate date
+    if (isNaN(checkoutDate.getTime())) {
+      return res.status(400).json({
+        success: false,
+        type: "W-Invalid Date",
+        message: "Invalid checkout date format.",
       });
     }
 
@@ -102,7 +126,7 @@ export const checkOut = async (req, res) => {
     await Database
       .update(Stays)
       .set({
-        checkoutAt,
+        checkoutAt: checkoutDate,
         status: "completed",
       })
       .where(eq(Stays.id, stayId));
@@ -120,6 +144,6 @@ export const checkOut = async (req, res) => {
     });
 
   } catch (error) {
-      return new Error("Failed to check out guest.");
+      return next(new Error(error.message));
   }
 };

@@ -38,14 +38,16 @@ GET {{baseUrl}}/guests?search=johnny
 
 ###
 # Get Guest By ID
-GET {{baseUrl}}/guests/87dea23a-0e78-42c0-8320-bca31c184d2d
+GET {{baseUrl}}/guests/84b23f23a-4e13-4387-90ad-b27f3c9d2471
 
 ###
 # Update Guest
-PUT {{baseUrl}}/guests/87dea23a-0e78-42c0-8320-bca31c184d2d
+PUT {{baseUrl}}/guests/4b23f23a-4e13-4387-90ad-b27f3c9d2471
 Content-Type: application/json
 
 {
-  "firstName": "Johnny",
-  "phone": "+639189876543"
+  "firstName": "John",
+  "lastName": "Wick",
+  "phone": "+639189876543",
+  "email": "wickjohn@gmail.com"
 }

@@ -16,7 +16,7 @@ export const errorHandler = (err, req, res, next) => {
     // Return the error
     res.status(statusCode).json({
         success: false,
-        type: "E-ServerError",
+        type: "E-Server Error",
         url: req.originalUrl,
         method: req.method,
         name: err.name,

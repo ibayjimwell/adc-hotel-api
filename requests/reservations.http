@@ -1,0 +1,38 @@
+@baseUrl = http://localhost:4000/api/v1
+@reservations = {{baseUrl}}/reservations
+
+
+### 
+# Create Reservation (Single Room)
+POST {{reservations}}
+Content-Type: application/json
+
+{
+  "guestId": "4b23f23a-4e13-4387-90ad-b27f3c9d2471",
+  "roomIds": [1],
+  "checkinDate": "2026-02-01T14:00:00",
+  "checkoutDate": "2026-02-05T11:00:00"
+}
+
+
+###
+# Create Reservation (Multiple Rooms)
+POST {{reservations}}
+Content-Type: application/json
+
+{
+  "guestId": "4b23f23a-4e13-4387-90ad-b27f3c9d2471",
+  "roomIds": [1, 2],
+  "checkinDate": "2026-02-10T14:00:00",
+  "checkoutDate": "2026-02-12T11:00:00"
+}
+
+
+### 
+# Get All Reservations
+GET {{reservations}}
+
+
+### 
+# Cancel Reservation
+PATCH {{reservations}}/00debd7c-66f4-4351-8c19-c5dc3fb177cd/cancel
