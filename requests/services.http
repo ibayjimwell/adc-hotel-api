@@ -1,0 +1,36 @@
+@baseUrl = http://localhost:4000/api/v1
+@services = {{baseUrl}}/services
+
+### 
+# Create Service
+POST {{services}}
+Content-Type: application/json
+
+{
+  "name": "Laundry",
+  "price": 150.00
+}
+
+### 
+# Create Another Service
+POST {{services}}
+Content-Type: application/json
+
+{
+  "name": "Breakfast",
+  "price": 300.00
+}
+
+### 
+# List All Services
+GET {{services}}
+
+### 
+# Update Service
+PUT {{services}}/1
+Content-Type: application/json
+
+{
+  "name": "Premium Laundry",
+  "price": 200.00
+}
