@@ -18,7 +18,7 @@ router.use("/stays", stayRoutes);
 router.use("/reservations", reservationRoutes);
 router.use("/services", serviceRoutes);
 router.use("/stays", stayServiceRoutes);
-router.use("/invoies", invoiceRoutes);
+router.use("/invoices", invoiceRoutes);
 router.use("/payments", paymentRoutes);
 
 export default router;

@@ -1,0 +1,12 @@
+@baseUrl = http://localhost:4000/api/v1
+@payments = {{baseUrl}}/payments
+
+### 
+# Pay Invoice (Full Payment)
+POST {{payments}}/c16d95ef-81bf-4fef-babd-0064decf41a3
+Content-Type: application/json
+
+{
+  "amount": 3500,
+  "method": "credit_card"
+}

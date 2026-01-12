@@ -3,7 +3,7 @@ import { Payments, Invoices } from "../models/index.js";
 import { eq, sum } from "drizzle-orm";
 
 
-// Pay Invoice (Partial or Full)
+// Pay Invoice (Full)
 export const payInvoice = async (req, res, next) => {
   try {
     const { invoiceId } = req.params;
@@ -51,7 +51,6 @@ export const payInvoice = async (req, res, next) => {
     // Update invoice status
     let status = "unpaid";
     if (totalPaid >= totalAmount) status = "paid";
-    else if (totalPaid > 0) status = "partial";
 
     await Database
       .update(Invoices)

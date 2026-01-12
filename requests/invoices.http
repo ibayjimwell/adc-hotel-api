@@ -1,0 +1,11 @@
+@baseUrl = http://localhost:4000/api/v1
+@invoices = {{baseUrl}}/invoices
+
+### 
+# Generate Invoice for a Stay
+POST {{invoices}}/generate/33324fd1-79bd-49fc-be56-b41d1d7f7926
+Content-Type: application/json
+
+### 
+# Get Invoice by Stay ID
+GET {{invoices}}/stay/33324fd1-79bd-49fc-be56-b41d1d7f7926
