@@ -18,6 +18,6 @@ staffRoutes.delete("/:id", deleteStaff);
 
 // Auth
 staffRoutes.post("/login", login);
-staffRoutes.patch("/:id/change-password", changePassword);
+staffRoutes.patch("/:id/change/password", changePassword);
 
 export default staffRoutes;

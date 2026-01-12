@@ -1,0 +1,52 @@
+@baseUrl = http://localhost:4000/api/v1/staff
+
+### 
+# Create Staff
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "role": "receptionist",
+  "email": "john.doe@example.com",
+  "password": "12345678"
+}
+
+### 
+# Staff Login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "12345678"
+}
+
+### 
+# Get all Staff
+GET {{baseUrl}}
+
+### 
+# Update Staff
+PUT {{baseUrl}}/258cbe92-9287-4461-b951-60ea9e368094
+Content-Type: application/json
+
+{
+  "name": "John Updated",
+  "role": "cashier",
+  "email": "john.updated@example.com"
+}
+
+### 
+# Change Password
+PATCH {{baseUrl}}/258cbe92-9287-4461-b951-60ea9e368094/change/password
+Content-Type: application/json
+
+{
+  "currentPassword": "12345678",
+  "newPassword": "newstrongpassword"
+}
+
+### 
+# Delete Staff
+DELETE {{baseUrl}}/258cbe92-9287-4461-b951-60ea9e368094
